@@ -1,0 +1,33 @@
+{
+    "name": "integer-inspector",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+    },
+    "settings": {
+        "terminal.integrated.profiles.linux": {
+            "bash": {
+                "path": "/bin/bash"
+            },
+        },
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.tabSize": 2,
+        "[typescript]": {
+            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+        },
+        "[javascript]": {
+            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+        },
+        "eslint.format.enable": true,
+        "eslint.lintTask.enable": true,
+        "eslint.packageManager": "yarn",
+        "typescript.tsdk": "/workspaces/dashboard-raspi/browser/node_modules/typescript/lib",
+    },
+    "extensions": [
+        "visualstudioexptteam.vscodeintellicode",
+        "dbaeumer.vscode-eslint",
+        "redhat.vscode-yaml",
+    ],
+    "updateRemoteUserUID": true,
+    "remoteUser": "vscode",
+}
