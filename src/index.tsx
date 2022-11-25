@@ -113,8 +113,8 @@ const App: React.FC = () => {
           <>
             <Stack>
               <Title order={1}>Integer Inspector</Title>
-              <Text color="dimmed">Integer viewer for programmers. Convert decimal to binary, octal and hexadecimal.</Text>
-              <Text color="dimmed">整数ビューア。整数値をビット列として読みたい時に使います</Text>
+              <Text color="dimmed">Online Integer (bit field) viewer for programmers. Convert decimal to binary, octal and hexadecimal.</Text>
+              <Text color="dimmed">オンライン整数ビューア。整数値をビット列として読みたい時に使います</Text>
             </Stack>
           </>
           <Group>

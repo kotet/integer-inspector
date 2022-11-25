@@ -17,7 +17,7 @@ export const ActionTable: React.FC<ActionIconProps> = (props: ActionIconProps) =
   };
 
   return <Card.Section px={PADDING_SIZE * 5}>
-    <ActionIcon title='Create copy (alt + c)' onClick={() => {
+    <ActionIcon title='Copy this result to new card (alt + c)' onClick={() => {
       addNewCard(new BasicViewerFactory(props.viewers.length, props.viewers[props.index].calculate()?.toString() ?? ""))
     }}><IconCirclePlus /></ActionIcon>
   </Card.Section>
