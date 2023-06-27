@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Title, Text, Container, Group, Box, Card } from "@mantine/core";
+import { Title, Text, Group, Box, Card } from "@mantine/core";
 import { IntegerViewerProps } from "./types";
 import { BASE_SIZE, PADDING_SIZE } from './constants';
 
@@ -8,8 +8,22 @@ export type IntegerTableProps = {
   decimalValue: string,
 } & IntegerViewerProps;
 export const IntegerTable: React.FC<IntegerTableProps> = (props: IntegerTableProps) => {
+  const ref = React.useRef<HTMLDivElement>(null);
 
   const v_unsigned = props.value & ((BigInt(1) << BigInt(props.bitWidth)) - BigInt(1))
+
+  React.useEffect(() => {
+    const f = () => {
+      if (ref.current) {
+        ref.current.scrollLeft = ref.current.scrollWidth;
+      }
+    }
+    window.addEventListener('resize', f);
+    f();
+    return () => {
+      window.removeEventListener('resize', f);
+    }
+  }, [ref.current]);
 
   return <><Card.Section px={PADDING_SIZE * 10}>
     <Title order={2}>
@@ -19,7 +33,10 @@ export const IntegerTable: React.FC<IntegerTableProps> = (props: IntegerTablePro
     {(props.value < BigInt(0)) ? <Text color={'dimmed'} size='xs'>{Intl.NumberFormat('en-US').format(v_unsigned) + " as unsigned"}</Text> : null}
     <SubIntegerView value={props.value} bitWidth={props.bitWidth} />
   </Card.Section>
-    <Card.Section style={{ width: '100%' }} px={PADDING_SIZE * 10}>
+    <Card.Section ref={ref} style={{
+      width: '100%',
+      overflowX: 'auto',
+    }} px={PADDING_SIZE * 10}>
       <IndexTable {...props} />
       <BinaryTable {...{ ...props, value: v_unsigned }} />
     </Card.Section>
