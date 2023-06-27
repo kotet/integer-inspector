@@ -16,7 +16,7 @@ RUN apt-get update \
 
 RUN apt-get update \
     && apt-get install -y \
-        make build-essential curl \
+        make build-essential curl git \
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \

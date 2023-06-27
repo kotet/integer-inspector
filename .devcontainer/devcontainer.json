@@ -13,10 +13,10 @@
         "terminal.integrated.defaultProfile.linux": "bash",
         "editor.tabSize": 2,
         "[typescript]": {
-            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+            "editor.defaultFormatter": "vscode.typescript-language-features"
         },
         "[javascript]": {
-            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+            "editor.defaultFormatter": "vscode.typescript-language-features"
         },
         "eslint.format.enable": true,
         "eslint.lintTask.enable": true,
