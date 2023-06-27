@@ -12,10 +12,12 @@ export const IntegerTable: React.FC<IntegerTableProps> = (props: IntegerTablePro
   const v_unsigned = props.value & ((BigInt(1) << BigInt(props.bitWidth)) - BigInt(1))
 
   return <><Card.Section px={PADDING_SIZE * 10}>
-    <Title order={2}>{Intl.NumberFormat('en-US').format(props.value)}</Title>
+    <Title order={2}>
+      {Intl.NumberFormat('en-US').format(props.value)}
+      {toIntN(props.value, props.bitWidth, v => v.toString())}
+    </Title>
     {(props.value < BigInt(0)) ? <Text color={'dimmed'} size='xs'>{Intl.NumberFormat('en-US').format(v_unsigned) + " as unsigned"}</Text> : null}
-    <Text color={'dimmed'} size='xs'>{toOctal(props.value, props.bitWidth)} as octal</Text>
-    <Text color={'dimmed'} size='xs'>{toHex(props.value, props.bitWidth)} as hexadecimal</Text>
+    <SubIntegerView value={props.value} bitWidth={props.bitWidth} />
   </Card.Section>
     <Card.Section style={{ width: '100%' }} px={PADDING_SIZE * 10}>
       <IndexTable {...props} />
@@ -60,10 +62,25 @@ const BitFiledViewer: React.FC<BitFieldViewerProps> = (props: BitFieldViewerProp
   const v = (props.value >> BigInt(props.range[0])) & ((BigInt(1) << BigInt(bitWidth)) - BigInt(1));
 
   return <Card.Section px={PADDING_SIZE * 10}>
-    <Title order={3}>{Intl.NumberFormat('en-US').format(props.value)} <Text span color={'dimmed'}>[{props.range[1]} .. {props.range[0]}]</Text> = {v.toString()}</Title>
-    <Text color={'dimmed'} size='xs'>{toOctal(v, bitWidth)} as octal</Text>
-    <Text color={'dimmed'} size='xs'>{toHex(v, bitWidth)} as hexadecimal</Text>
+    <Title order={3}>
+      {Intl.NumberFormat('en-US').format(props.value)}
+      <Text span color={'dimmed'}>[{props.range[1]} .. {props.range[0]}]</Text>
+      = {v.toString()}
+      {toIntN(v, bitWidth, (v) => v.toString())}
+    </Title>
+    <SubIntegerView value={v} bitWidth={bitWidth} />
   </Card.Section>
+}
+
+type SubIntegerViewProps = {
+  value: bigint,
+  bitWidth: number,
+}
+const SubIntegerView: React.FC<SubIntegerViewProps> = (props: SubIntegerViewProps) => {
+  return <>
+    <Text color={'dimmed'} size='xs'>{toOctal(props.value, props.bitWidth)}{toIntN(props.value, props.bitWidth, v => <>-{toOctal(-v, props.bitWidth)}</>)} as octal</Text>
+    <Text color={'dimmed'} size='xs'>{toHex(props.value, props.bitWidth)}{toIntN(props.value, props.bitWidth, v => <>-{toHex(-v, props.bitWidth)}</>)} as hexadecimal</Text>
+  </>
 }
 
 type IndexProps = {} & IntegerViewerProps;
@@ -84,6 +101,14 @@ const IndexTable: React.FC<IndexProps> = (props: IndexProps) => {
   return <Group id={"index-root"} px={0} className='dense-group'>
     {elems.reverse()}
   </Group>
+}
+
+function toIntN(v: bigint, bitWidth: number, view: (v: bigint) => React.ReactNode): React.ReactNode {
+  const w = BigInt.asIntN(bitWidth, v);
+  if (w >= 0) {
+    return null;
+  }
+  return <> ({view(w)})</>;
 }
 
 function toOctal(val: bigint, bitwidth: number): React.ReactNode {
