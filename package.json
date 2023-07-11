@@ -22,7 +22,7 @@
     "vite-plugin-html": "^3.2.0"
   },
   "scripts": {
-    "build": "vite build && cp -R static/* dist/",
+    "build": "vite build --base \"/integer-inspector/\" && cp -R static/* dist/",
     "serve": "vite serve",
     "preview": "vite preview",
     "clean": "rm -rf dist/"

@@ -7,7 +7,14 @@ export default defineConfig(
   {
     resolve: {
       alias: {
-        src: path.resolve(__dirname, 'src'),
+        src: path.resolve(__dirname, 'src/'),
+      }
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: '[name]-[hash].js'
+        }
       }
     },
     publicDir: 'static/',
