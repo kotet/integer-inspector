@@ -1,19 +1,24 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { createHtmlPlugin } from 'vite-plugin-html';
 import path from 'path';
+import { ViteMinifyPlugin } from 'vite-plugin-minify'; // minify html
 
 export default defineConfig(
   {
+    base: '',
     resolve: {
       alias: {
         src: path.resolve(__dirname, 'src/'),
       }
     },
     build: {
+      minify: true,
       rollupOptions: {
+        input: {
+          index: path.resolve(__dirname, 'index.html')
+        },
         output: {
-          entryFileNames: '[name]-[hash].js'
+          entryFileNames: '[name]-[hash].js',
         }
       }
     },
@@ -22,11 +27,10 @@ export default defineConfig(
       react({
         include: '**/*.tsx',
       }),
-      createHtmlPlugin({
-        minify: false,
-        entry: 'src/index.tsx',
-        template: 'src/index.html',
-      }),
-    ]
+      ViteMinifyPlugin({}),
+    ],
+    server: {
+      open: true,
+    }
   }
 );
