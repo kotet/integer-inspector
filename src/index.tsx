@@ -127,7 +127,7 @@ const App: React.FC = () => {
       <Divider></Divider>
       <Container px={0} fluid>
         <Container ml={0} py={20} size={400}>
-          <NumberInput value={bitWidth} onChange={(val) => setBitWidth(val ?? 64)} label="Bit Width" placeholder='64'></NumberInput>
+          <NumberInput value={bitWidth} onChange={(val) => setBitWidth(val ?? 64)} min={1} label="Bit Width" placeholder='64'></NumberInput>
         </Container>
         <Divider />
         {
